@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <title>Lista de Plantillas de Horario</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .page-title {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Estilos para la tabla */
+    .table-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    .table th {
+      font-weight: 600;
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    /* Estilos para el modal */
+    .modal-header {
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    /* Estilos para los horarios en el modal */
+    .horario-badge {
+      font-size: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .periodo-mañana {
+      background-color: #e3f2fd;
+      color: #0d6efd;
+      border: 1px solid #cfe2ff;
+    }
+
+    .periodo-tarde {
+      background-color: #fff3cd;
+      color: #664d03;
+      border: 1px solid #ffecb5;
+    }
+
+    .periodo-noche {
+      background-color: #d1e7dd;
+      color: #0f5132;
+      border: 1px solid #badbcc;
+    }
+
+    .dia-semana {
+      font-weight: 600;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #495057;
+    }
+
+    .detalle-horario {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px dashed #dee2e6;
+    }
+
+    .detalle-horario:last-child {
+      border-bottom: none;
+    }
+
+    /* Animaciones */
+    .btn-action {
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para las tarjetas de días */
+    .card {
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 0.75rem 1rem;
+    }
+
+    /* Estilos para el spinner */
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container py-4">
+  <!-- Encabezado de la página -->
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5 fw-bold text-primary page-title">Lista de Plantillas de Horario</h1>
+      <p class="text-muted">Gestiona las plantillas de horario para los empleados del restaurante</p>
+    </div>
+  </div>
+
+  <!-- Barra de acciones -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <a href="/" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-house me-1"></i> Inicio
+          </a>
+          <a href="/detalles-plantilla" class="btn btn-outline-info">
+            <i class="bi bi-list-check me-1"></i> Ver Detalles
+          </a>
+        </div>
+        <a href="/plantillas/nueva" class="btn btn-primary btn-action">
+          <i class="bi bi-plus-circle me-1"></i> Nueva Plantilla
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de plantillas -->
+  <div class="card shadow table-container">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle mb-0">
+          <thead>
+          <tr>
+            <th scope="col" class="ps-4">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="plantilla : ${plantillas}">
+            <td class="ps-4" th:text="${plantilla.id}"></td>
+            <td>
+              <span class="fw-medium" th:text="${plantilla.nombre}"></span>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center gap-2 py-2">
+                <a th:href="@{/plantillas/editar/{id}(id=${plantilla.id})}" class="btn btn-sm btn-outline-primary btn-action">
+                  <i class="bi bi-pencil-square"></i> Editar
+                </a>
+                <a th:href="@{/plantillas/eliminar/{id}(id=${plantilla.id})}"
+                   onclick="return confirm('¿Estás seguro que deseas eliminar esta plantilla? Esta acción no se puede deshacer.')"
+                   class="btn btn-sm btn-outline-danger btn-action">
+                  <i class="bi bi-trash"></i> Eliminar
+                </a>
+                <button type="button" class="btn btn-sm btn-outline-info btn-action ver-detalle-btn"
+                        th:data-id="${plantilla.id}"
+                        th:data-nombre="${plantilla.nombre}">
+                  <i class="bi bi-eye"></i> Ver Detalles
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(plantillas)}">
+            <td colspan="3" class="text-center py-5">
+              <div class="alert alert-info mb-0 mx-4">
+                <i class="bi bi-info-circle me-2"></i> No hay plantillas de horario registradas
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información adicional -->
+  <div class="mt-4">
+    <div class="alert alert-light border">
+      <div class="d-flex">
+        <div class="me-3">
+          <i class="bi bi-info-circle-fill text-primary fs-4"></i>
+        </div>
+        <div>
+          <h5 class="alert-heading">Información sobre plantillas</h5>
+          <p class="mb-0">Las plantillas de horario permiten definir patrones semanales de trabajo para los empleados. Cada plantilla contiene horarios específicos para cada día de la semana.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para mostrar detalles de la plantilla -->
+  <div class="modal fade" id="detallePlantillaModal" tabindex="-1" aria-labelledby="detallePlantillaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detallePlantillaModalLabel">Detalles de Plantilla</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Spinner de carga -->
+          <div class="spinner-container" id="loadingSpinner">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3 text-muted">Cargando detalles de la plantilla...</p>
+          </div>
+
+          <!-- Contenido de los detalles -->
+          <div id="detalleContenido" style="display: none;">
+            <div class="mb-4 border-bottom pb-3">
+              <h3 id="nombrePlantilla" class="text-primary mb-2"></h3>
+              <p class="text-muted">Resumen de horarios asignados por día de la semana</p>
+            </div>
+
+            <div class="row" id="detallesPorDia">
+              <!-- Aquí se cargarán dinámicamente los detalles por día -->
+            </div>
+          </div>
+
+          <!-- Mensaje de error -->
+          <div id="errorMensaje" class="alert alert-danger d-flex align-items-center" style="display: none;">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span id="errorTexto"></span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <a id="editarPlantillaBtn" href="#" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> Editar Plantilla
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para manejar el modal -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el modal
+    const modal = new bootstrap.Modal(document.getElementById('detallePlantillaModal'));
+
+    // Manejar clics en los botones "Ver Detalles"
+    document.querySelectorAll('.ver-detalle-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const plantillaId = this.getAttribute('data-id');
+        const plantillaNombre = this.getAttribute('data-nombre');
+
+        // Actualizar el título del modal y el botón de editar
+        document.getElementById('nombrePlantilla').textContent = plantillaNombre;
+        document.getElementById('editarPlantillaBtn').href = `/plantillas/editar/${plantillaId}`;
+
+        // Mostrar spinner de carga
+        document.getElementById('loadingSpinner').style.display = 'flex';
+        document.getElementById('detalleContenido').style.display = 'none';
+        document.getElementById('errorMensaje').style.display = 'none';
+
+        // Abrir el modal
+        modal.show();
+
+        // Cargar los detalles de la plantilla
+        fetch(`/plantillas/detalle/${plantillaId}`)
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  // Ocultar spinner
+                  document.getElementById('loadingSpinner').style.display = 'none';
+
+                  if (data.success) {
+                    // Mostrar contenido
+                    document.getElementById('detalleContenido').style.display = 'block';
+
+                    // Limpiar contenedor de detalles
+                    const detallesContainer = document.getElementById('detallesPorDia');
+                    detallesContainer.innerHTML = '';
+
+                    // Ordenar los días de la semana
+                    const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+                    // Generar HTML para cada día
+                    diasSemana.forEach(dia => {
+                      const detallesDia = data.detallesPorDia[dia] || [];
+
+                      // Crear columna para el día
+                      const colDiv = document.createElement('div');
+                      colDiv.className = 'col-md-6 col-lg-4 mb-4';
+
+                      // Crear tarjeta para el día
+                      const cardDiv = document.createElement('div');
+                      cardDiv.className = 'card h-100';
+
+                      // Crear encabezado de la tarjeta
+                      const cardHeader = document.createElement('div');
+                      cardHeader.className = 'card-header';
+                      cardHeader.innerHTML = `<h5 class="mb-0">${dia}</h5>`;
+
+                      // Crear cuerpo de la tarjeta
+                      const cardBody = document.createElement('div');
+                      cardBody.className = 'card-body';
+
+                      if (detallesDia.length === 0) {
+                        // No hay horarios para este día
+                        cardBody.innerHTML = `
+                  <div class="text-center text-muted py-3">
+                    <i class="bi bi-calendar-x fs-3"></i>
+                    <p class="mt-2 mb-0">Sin horarios asignados</p>
+                  </div>
+                `;
+                      } else {
+                        // Hay horarios para este día
+                        detallesDia.forEach(detalle => {
+                          const detalleDiv = document.createElement('div');
+                          detalleDiv.className = 'detalle-horario';
+
+                          // Determinar la clase del periodo
+                          let periodoClass = '';
+                          if (detalle.periodo.toLowerCase().includes('mañana')) {
+                            periodoClass = 'periodo-mañana';
+                          } else if (detalle.periodo.toLowerCase().includes('tarde')) {
+                            periodoClass = 'periodo-tarde';
+                          } else if (detalle.periodo.toLowerCase().includes('noche')) {
+                            periodoClass = 'periodo-noche';
+                          }
+
+                          // Formatear las horas para mostrarlas mejor
+                          const horaInicio = typeof detalle.inicio === 'string' ? detalle.inicio.substring(0, 5) : detalle.inicio; // Tomar solo HH:MM
+                          const horaFin = typeof detalle.fin === 'string' ? detalle.fin.substring(0, 5) : detalle.fin; // Tomar solo HH:MM
+
+                          detalleDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="horario-badge ${periodoClass}">${detalle.codigo}</span>
+                      <span class="text-muted small">${detalle.periodo}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-clock me-2 text-primary"></i>
+                      <span>${horaInicio} - ${horaFin}</span>
+                    </div>
+                  `;
+
+                          cardBody.appendChild(detalleDiv);
+                        });
+                      }
+
+                      // Ensamblar la tarjeta
+                      cardDiv.appendChild(cardHeader);
+                      cardDiv.appendChild(cardBody);
+                      colDiv.appendChild(cardDiv);
+
+                      // Añadir al contenedor principal
+                      detallesContainer.appendChild(colDiv);
+                    });
+                  } else {
+                    // Mostrar mensaje de error
+                    document.getElementById('errorMensaje').style.display = 'flex';
+                    document.getElementById('errorTexto').textContent = data.message || 'Error al cargar los detalles de la plantilla';
+                  }
+                })
+                .catch(error => {
+                  // Ocultar spinner y mostrar error
+                  document.getElementById('loadingSpinner').style.display = 'none';
+                  document.getElementById('errorMensaje').style.display = 'flex';
+                  document.getElementById('errorTexto').textContent = 'Error de conexión al cargar los detalles';
+                  console.error('Error:', error);
+                });
+      });
+    });
+  });
+</script>
+</body>
+</html>

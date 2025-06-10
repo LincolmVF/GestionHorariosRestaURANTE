@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Períodos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">Lista de Períodos</h2>
+      <a href="/periodos/nuevo" class="btn btn-light">
+        <i class="bi bi-plus-circle me-2"></i>Nuevo Período
+      </a>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="periodo : ${periodos}">
+            <td th:text="${periodo.id}"></td>
+            <td th:text="${periodo.nombre}"></td>
+            <td th:text="${periodo.inicio}"></td>
+            <td th:text="${periodo.fin}"></td>
+            <td>
+              <a th:href="@{/periodos/editar/{id}(id=${periodo.id})}" class="btn btn-warning btn-sm me-2">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a th:href="@{/periodos/eliminar/{id}(id=${periodo.id})}" class="btn btn-danger btn-sm"
+                 onclick="return confirm('¿Estás seguro de que quieres eliminar este período?')">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

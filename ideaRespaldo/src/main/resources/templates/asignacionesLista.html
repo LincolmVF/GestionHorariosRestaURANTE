@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Asignaciones de Zonas</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .table-container {
+      overflow-x: auto;
+    }
+    .zona-cell {
+      font-weight: bold;
+      background-color: #f8f9fa;
+    }
+    .empleado-asignado {
+      margin-bottom: 5px;
+      padding: 5px;
+      background-color: #e9ecef;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .empleado-nombre {
+      margin-right: 10px;
+    }
+    .acciones-container {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid mt-5">
+  <h1 class="mb-4">Asignaciones de Zonas</h1>
+
+  <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+
+  <div class="mb-3">
+    <a href="/asignacionesZona/nueva" class="btn btn-primary mr-2">Crear Nueva Asignación</a>
+    <a href="/asignacionesZona/generar" class="btn btn-success mr-2">Generar Asignaciones para la Semana</a>
+    <a href="/asignacionesZona/borrar-todas" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres borrar todas las asignaciones?')">Borrar Todas las Asignaciones</a>
+  </div>
+
+  <!-- Tabla con zonas en filas y días en columnas -->
+  <div class="table-container">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>Zona</th>
+        <th th:each="dia : ${diasSemana}" th:text="${dia}"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Iterar sobre todas las zonas -->
+      <tr th:each="zona : ${zonas}">
+        <td class="zona-cell" th:text="${zona.nombre}"></td>
+
+        <!-- Para cada día de la semana -->
+        <td th:each="dia : ${diasSemana}">
+          <!-- Filtrar asignaciones para esta zona y día -->
+          <div th:each="asignacion : ${asignaciones}">
+            <div th:if="${asignacion.zona.id eq zona.id and asignacion.diaDeLaSemana eq dia}"
+                 class="empleado-asignado">
+              <span class="empleado-nombre" th:text="${asignacion.empleado.nombre}"></span>
+              <div class="acciones-container">
+                <a th:href="@{/asignacionesZona/editar/{id}(id=${asignacion.id})}" class="btn btn-sm btn-info mr-1">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a th:href="@{/asignacionesZona/eliminar/{id}(id=${asignacion.id})}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('¿Estás seguro de que quieres eliminar esta asignación?')">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Vista alternativa en formato lista para referencia -->
+  <div class="mt-5">
+    <h3>Vista de Lista</h3>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Empleado</th>
+        <th>Zona</th>
+        <th>Día de la Semana</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="asignacion : ${asignaciones}">
+        <td th:text="${asignacion.id}"></td>
+        <td th:text="${asignacion.empleado.nombre}"></td>
+        <td th:text="${asignacion.zona.nombre}"></td>
+        <td th:text="${asignacion.diaDeLaSemana}"></td>
+        <td>
+          <a th:href="@{/asignacionesZona/editar/{id}(id=${asignacion.id})}" class="btn btn-sm btn-info mr-2">Editar</a>
+          <a th:href="@{/asignacionesZona/eliminar/{id}(id=${asignacion.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta asignación?')">Eliminar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

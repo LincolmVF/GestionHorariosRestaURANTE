@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Resumen de Horarios</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<h1>Resumen de Horarios por Día</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Día</th>
+    <th>Almuerzo</th>
+    <th>Cena</th>
+    <th>Ambos</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="item : ${resumen}">
+    <td th:text="${item.diaDeLaSemana}"></td>
+    <td th:text="${item.cantidadAlmuerzo}"></td>
+    <td th:text="${item.cantidadCena}"></td>
+    <td th:text="${item.cantidadAmbos}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+<a href="/">Volver al inicio</a>
+
+</body>
+</html>

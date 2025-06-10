@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Estadísticas de Horarios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h2 class="text-center">Estadísticas de Horarios</h2>
+  <table class="table table-bordered mt-4">
+    <thead>
+    <tr>
+      <th>Día de la Semana</th>
+      <th>Almuerzo</th>
+      <th>Cena</th>
+      <th>Ambos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dia : ${diasSemana}">
+      <td th:text="${dia}"></td>
+      <td th:text="${estadisticas[dia] != null ? estadisticas[dia]['Almuerzo'] : 0}"></td>
+      <td th:text="${estadisticas[dia] != null ? estadisticas[dia]['Cena'] : 0}"></td>
+      <td th:text="${estadisticas[dia] != null ? estadisticas[dia]['Ambos'] : 0}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

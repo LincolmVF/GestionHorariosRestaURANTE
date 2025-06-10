@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${asignacionZona.id} ? 'Editar Asignación' : 'Nueva Asignación'"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4" th:text="${asignacionZona.id} ? 'Editar Asignación' : 'Nueva Asignación'"></h1>
+
+    <!-- Formulario para editar una asignación existente -->
+    <form th:if="${asignacionZona.id}" th:action="@{/asignacionesZona/editar/{id}(id=${asignacionZona.id})}" th:object="${asignacionZona}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label th:for="${#ids.next('empleado')}">Empleado:</label>
+            <select th:field="*{empleado}" class="form-control" required>
+                <option th:each="empleado : ${empleados}"
+                        th:value="${empleado.id}"
+                        th:text="${empleado.nombre}"
+                        th:selected="${empleado.id == asignacionZona.empleado.id}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="${#ids.next('zona')}">Zona:</label>
+            <select th:field="*{zona}" class="form-control" required>
+                <option th:each="zona : ${zonas}"
+                        th:value="${zona.id}"
+                        th:text="${zona.nombre}"
+                        th:selected="${zona.id == asignacionZona.zona.id}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="${#ids.next('diaDeLaSemana')}">Día de la Semana:</label>
+            <select th:field="*{diaDeLaSemana}" class="form-control" required>
+                <option value="Lunes" th:selected="${asignacionZona.diaDeLaSemana == 'Lunes'}">Lunes</option>
+                <option value="Martes" th:selected="${asignacionZona.diaDeLaSemana == 'Martes'}">Martes</option>
+                <option value="Miércoles" th:selected="${asignacionZona.diaDeLaSemana == 'Miércoles'}">Miércoles</option>
+                <option value="Jueves" th:selected="${asignacionZona.diaDeLaSemana == 'Jueves'}">Jueves</option>
+                <option value="Viernes" th:selected="${asignacionZona.diaDeLaSemana == 'Viernes'}">Viernes</option>
+                <option value="Sábado" th:selected="${asignacionZona.diaDeLaSemana == 'Sábado'}">Sábado</option>
+                <option value="Domingo" th:selected="${asignacionZona.diaDeLaSemana == 'Domingo'}">Domingo</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="/asignacionesZona" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+    <!-- Formulario para crear una nueva asignación -->
+    <form th:unless="${asignacionZona.id}" th:action="@{/asignacionesZona/nueva}" th:object="${asignacionZona}" method="post">
+        <div class="form-group">
+            <label th:for="${#ids.next('empleado')}">Empleado:</label>
+            <select th:field="*{empleado}" class="form-control" required>
+                <option value="">Seleccione un empleado</option>
+                <option th:each="empleado : ${empleados}"
+                        th:value="${empleado.id}"
+                        th:text="${empleado.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="${#ids.next('zona')}">Zona:</label>
+            <select th:field="*{zona}" class="form-control" required>
+                <option value="">Seleccione una zona</option>
+                <option th:each="zona : ${zonas}"
+                        th:value="${zona.id}"
+                        th:text="${zona.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="${#ids.next('diaDeLaSemana')}">Día de la Semana:</label>
+            <select th:field="*{diaDeLaSemana}" class="form-control" required>
+                <option value="">Seleccione un día</option>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Asignación</button>
+        <a href="/asignacionesZona" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

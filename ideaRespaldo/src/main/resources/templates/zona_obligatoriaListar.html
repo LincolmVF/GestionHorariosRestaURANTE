@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Zonas Obligatorias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container py-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="display-5 fw-bold text-primary">Lista de Zonas Obligatorias</h1>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <a href="/" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-house me-1"></i> Inicio
+          </a>
+          <a href="/zonas" class="btn btn-outline-info">
+            <i class="bi bi-geo-alt me-1"></i> Zonas
+          </a>
+        </div>
+        <a href="/zonas-obligatorias/crear" class="btn btn-primary">
+          <i class="bi bi-plus-circle me-1"></i> Crear Nueva Zona Obligatoria
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Zona</th>
+            <th scope="col">Día de la Semana</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="zonaObligatoria : ${zonasObligatorias}">
+            <td th:text="${zonaObligatoria.id}"></td>
+            <td>
+              <span class="badge bg-info text-dark" th:text="${zonaObligatoria.zona.nombre}"></span>
+            </td>
+            <td>
+                  <span th:class="${
+                    zonaObligatoria.diaDeLaSemana == 'Lunes' || zonaObligatoria.diaDeLaSemana == 'Martes' ||
+                    zonaObligatoria.diaDeLaSemana == 'Miércoles' || zonaObligatoria.diaDeLaSemana == 'Jueves' ||
+                    zonaObligatoria.diaDeLaSemana == 'Viernes' ? 'badge bg-primary' : 'badge bg-warning text-dark'}"
+                        th:text="${zonaObligatoria.diaDeLaSemana}"></span>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a th:href="@{/zonas-obligatorias/editar/{id}(id=${zonaObligatoria.id})}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-pencil-square"></i> Editar
+                </a>
+                <a th:href="@{/zonas-obligatorias/eliminar/{id}(id=${zonaObligatoria.id})}"
+                   onclick="return confirm('¿Seguro que deseas eliminar esta zona obligatoria?')"
+                   class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i> Eliminar
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(zonasObligatorias)}">
+            <td colspan="4" class="text-center py-4">
+              <div class="alert alert-info mb-0">
+                <i class="bi bi-info-circle me-2"></i> No hay zonas obligatorias registradas
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</body>
+</html>

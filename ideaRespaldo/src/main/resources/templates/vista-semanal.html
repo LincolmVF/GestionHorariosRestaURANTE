@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Semanal de Asignaciones de Zona</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .day-card {
+            margin-bottom: 2rem;
+        }
+        .assignment-card {
+            margin-bottom: 0.5rem;
+        }
+        .time-bar {
+            height: 5px;
+            background-color: #007bff;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Vista Semanal de Asignaciones de Zona</h1>
+
+    <div class="row">
+        <div th:each="dia : ${diasSemana}" class="col-md-6 col-lg-4 mb-4">
+            <div class="card day-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0" th:text="${dia}"></h3>
+                </div>
+                <div class="card-body">
+                    <div th:each="zona : ${zonas}" class="mb-3">
+                        <h5 th:text="${zona.nombre}" class="border-bottom pb-2"></h5>
+                        <div th:with="asignacionesDelDia=${asignacionesPorDia.get(dia)}">
+                            <div th:if="${asignacionesDelDia != null}" th:each="asignacion : ${asignacionesDelDia}">
+                                <div th:if="${asignacion.zona.id == zona.id}" class="card assignment-card">
+                                    <div class="card-body p-2">
+                                        <h6 th:text="${asignacion.empleado.nombre}" class="card-title mb-1"></h6>
+                                        <p class="card-text mb-1" th:text="${#temporals.format(asignacion.inicio, 'HH:mm')} + ' - ' + ${#temporals.format(asignacion.fin, 'HH:mm')}"></p>
+                                        <div class="time-bar" th:style="'width: ' + ${(asignacion.fin.toSecondOfDay() - asignacion.inicio.toSecondOfDay()) / 864.0} + '%'"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p th:if="${asignacionesDelDia == null or #lists.isEmpty(asignacionesDelDia)}" class="text-muted">Sin asignaciones</p>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

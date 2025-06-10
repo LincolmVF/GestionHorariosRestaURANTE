@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Día de la Semana</th>
+    <th>Periodo</th>
+    <th>Cantidad de Asignaciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="dato : ${estadisticas}">
+    <td th:text="${dato['diaDeLaSemana']}"></td>
+    <td th:text="${dato['periodo']}"></td>
+    <td th:text="${dato['cantidad']}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+</body>
+</html>

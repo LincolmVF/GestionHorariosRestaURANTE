@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Simple - Sistema de Horarios y Zonas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 18px;
+      background-color: #f9f9f9;
+    }
+    .step-box {
+      border: 3px solid #4361ee;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 15px;
+      background-color: white;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+    .step-box:hover {
+      transform: scale(1.03);
+    }
+    .step-number {
+      background-color: #4361ee;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      margin: 0 auto 15px auto;
+    }
+    .section-title {
+      background-color: #4361ee;
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      font-size: 24px;
+      text-align: center;
+    }
+    .icon-large {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #4361ee;
+    }
+    .arrow {
+      color: #4361ee;
+      font-size: 40px;
+      margin: 10px;
+      align-self: center;
+    }
+    .example {
+      background-color: #e9f5ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      border-left: 5px solid #4361ee;
+    }
+    .card {
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      background-color: #e7f1ff;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 15px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    .footer {
+      background-color: #4361ee;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 style="font-size: 36px; font-weight: bold; color: #4361ee;">¿Cómo funciona nuestro sistema?</h1>
+    <p class="lead" style="font-size: 22px;">Una guía muy fácil para entender cómo crear horarios y asignar zonas</p>
+  </div>
+
+  <!-- PARTE 1: HORARIOS -->
+  <div class="card mb-5">
+    <div class="card-header">
+      <i class="bi bi-calendar-week"></i> PARTE 1: CREANDO HORARIOS
+    </div>
+    <div class="card-body">
+      <div class="row text-center">
+        <!-- Paso 1 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">1</div>
+            <i class="bi bi-clock icon-large"></i>
+            <h3>Crear Horario</h3>
+            <p>Hacemos un horario y le ponemos un nombre como "A1"</p>
+            <div class="example">
+              Ejemplo: Horario "A1" de 8:00 a 16:00
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">2</div>
+            <i class="bi bi-calendar-plus icon-large"></i>
+            <h3>Crear Plantilla</h3>
+            <p>Juntamos varios horarios para toda la semana</p>
+            <div class="example">
+              Ejemplo: Plantilla "Semana Normal"
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">3</div>
+            <i class="bi bi-person-check icon-large"></i>
+            <h3>Asignar a Persona</h3>
+            <p>Le damos la plantilla a un trabajador</p>
+            <div class="example">
+              Ejemplo: Juan tiene la plantilla "Semana Normal"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explicación simple -->
+      <div class="card mt-4">
+        <div class="card-body">
+          <h4 class="text-center mb-4">¿Cómo funciona?</h4>
+          <div class="row align-items-center">
+            <div class="col-md-4 text-center">
+              <img src="/placeholder.svg?height=150&width=150" alt="Reloj" class="img-fluid mb-3" style="max-width: 150px;">
+              <h5>Paso 1</h5>
+              <p>Primero creamos horarios diferentes como "Mañana", "Tarde" y "Noche".</p>
+            </div>
+            <div class="col-md-4 text-center">
+              <img src="/placeholder.svg?height=150&width=150" alt="Calendario" class="img-fluid mb-3" style="max-width: 150px;">
+              <h5>Paso 2</h5>
+              <p>Luego armamos una plantilla diciendo qué horario va cada día.</p>
+            </div>
+            <div class="col-md-4 text-center">
+              <img src="/placeholder.svg?height=150&width=150" alt="Persona" class="img-fluid mb-3" style="max-width: 150px;">
+              <h5>Paso 3</h5>
+              <p>Finalmente, le damos la plantilla a un trabajador y ¡listo! Ya tiene su horario.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTE 2: ZONAS -->
+  <div class="card mb-5">
+    <div class="card-header">
+      <i class="bi bi-geo-alt"></i> PARTE 2: ASIGNANDO ZONAS DE TRABAJO
+    </div>
+    <div class="card-body">
+      <div class="row text-center">
+        <!-- Paso 1 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">1</div>
+            <i class="bi bi-map icon-large"></i>
+            <h3>Crear Zonas</h3>
+            <p>Creamos las zonas donde trabajará la gente</p>
+            <div class="example">
+              Ejemplo: Zona "Cocina", Zona "Salón"
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">2</div>
+            <i class="bi bi-star icon-large"></i>
+            <h3>Zonas Importantes</h3>
+            <p>Marcamos qué zonas son más importantes cada día</p>
+            <div class="example">
+              Ejemplo: Los viernes, la "Terraza" es importante
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="col-md-4">
+          <div class="step-box">
+            <div class="step-number">3</div>
+            <i class="bi bi-check2-circle icon-large"></i>
+            <h3>Asignar Zonas</h3>
+            <p>Decidimos quién trabaja en cada zona</p>
+            <div class="example">
+              Ejemplo: Juan trabaja en "Cocina" en el almuerzo
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explicación simple con imágenes -->
+      <div class="card mt-4">
+        <div class="card-body">
+          <h4 class="text-center mb-4">¿Cómo funciona?</h4>
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center mb-4">
+              <img src="/placeholder.svg?height=200&width=300" alt="Mapa de zonas" class="img-fluid mb-3" style="max-width: 300px;">
+              <h5>Primero creamos las zonas</h5>
+              <p>Dividimos nuestro lugar en diferentes zonas como "Cocina", "Salón" y "Terraza".</p>
+            </div>
+            <div class="col-md-6 text-center mb-4">
+              <img src="/placeholder.svg?height=200&width=300" alt="Asignación de personas" class="img-fluid mb-3" style="max-width: 300px;">
+              <h5>Luego asignamos personas</h5>
+              <p>Decidimos quién trabaja en cada zona. Una persona puede estar en diferentes zonas en el almuerzo y en la cena.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EJEMPLO COMPLETO -->
+  <div class="card">
+    <div class="card-header">
+      <i class="bi bi-lightbulb"></i> UN EJEMPLO COMPLETO
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="text-center mb-4">Juan y su horario</h4>
+              <ol style="font-size: 18px; line-height: 1.8;">
+                <li>Creamos el <strong>Horario A1</strong>: 8:00 a 16:00 (Almuerzo)</li>
+                <li>Creamos el <strong>Horario B2</strong>: 16:00 a 23:00 (Cena)</li>
+                <li>Hacemos la <strong>Plantilla "Semana de Juan"</strong>:
+                  <ul>
+                    <li>Lunes: A1</li>
+                    <li>Martes: A1</li>
+                    <li>Miércoles: Descanso</li>
+                    <li>Jueves: B2</li>
+                    <li>Viernes: B2</li>
+                  </ul>
+                </li>
+                <li>Asignamos esta plantilla a <strong>Juan</strong></li>
+                <li>¡Listo! Juan ya tiene su horario para toda la semana</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="text-center mb-4">Juan y sus zonas</h4>
+              <ol style="font-size: 18px; line-height: 1.8;">
+                <li>Creamos las <strong>Zonas</strong>: "Cocina", "Salón" y "Terraza"</li>
+                <li>Marcamos que los viernes la "Terraza" es <strong>importante</strong></li>
+                <li>El sistema asigna a Juan:
+                  <ul>
+                    <li>Lunes (Almuerzo): Cocina</li>
+                    <li>Martes (Almuerzo): Salón</li>
+                    <li>Jueves (Cena): Salón</li>
+                    <li>Viernes (Cena): Terraza (¡porque es importante!)</li>
+                  </ul>
+                </li>
+                <li>Si queremos, podemos cambiar estas zonas manualmente</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN FINAL -->
+  <div class="card mt-5 bg-light">
+    <div class="card-body text-center">
+      <h3 style="color: #4361ee;">¡Así de fácil funciona nuestro sistema!</h3>
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <i class="bi bi-calendar-check icon-large"></i>
+              <h4>Para los horarios:</h4>
+              <p>Crear horarios → Hacer plantillas → Asignar a personas</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <i class="bi bi-geo icon-large"></i>
+              <h4>Para las zonas:</h4>
+              <p>Crear zonas → Marcar zonas importantes → Asignar personas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <p style="font-size: 20px;">Sistema de Horarios y Zonas - Guía Fácil</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

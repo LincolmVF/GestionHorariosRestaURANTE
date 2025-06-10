@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Estadísticas de Asignaciones</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<h1>Estadísticas de Asignaciones</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Periodo</th>
+        <th th:each="dia : ${diasSemana}" th:text="${dia}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${matrizAsignaciones}">
+        <td th:text="${entry.key}"></td> <!-- Periodo -->
+        <td th:each="dia : ${diasSemana}" th:text="${entry.value[dia]}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
